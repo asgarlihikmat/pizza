@@ -1,9 +1,11 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Pagination = ({setCurrentPage,postsPerPage}) => {
 
-   
+  const usersList = useSelector((state) => state.usersSlice.users);
 
     return (
        <>
@@ -12,7 +14,7 @@ const Pagination = ({setCurrentPage,postsPerPage}) => {
         nextLabel="next >"
         onPageChange={event => setCurrentPage(event.selected + 1)}
         pageRangeDisplayed={postsPerPage}
-        pageCount={9/4}
+        pageCount={4}
         previousLabel="< previous"
         renderOnZeroPageCount={null}
       />

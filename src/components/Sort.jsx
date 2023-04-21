@@ -1,38 +1,43 @@
-import React from 'react'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../redux/filterSlice";
 
-function Sort({sorted,setSorted}) {
+export const sortType = [
+  {id:1, name: "популярности (DESC)", sortProperty: "rating" },
+  {id:2, name: "популярности (ASC)", sortProperty: "-rating" },
+  {id:3, name: "цена (DESC)", sortProperty: "price" },
+  {id:4, name: "цена (ASC)", sortProperty: "-price" },
+  {id:5, name: "алфавиту (DESC)", sortProperty: "title" },
+  {id:6, name: "алфавиту (ASC)", sortProperty: "-title" },
+];
 
-  const[sortType,setSortType] = React.useState([
-    {name: 'популярности (DESC)',sortProperty: 'rating'},
-    {name: 'популярности (ASC)',sortProperty: '-rating'},
-    {name: 'цена (DESC)',sortProperty: 'price'},
-    {name: 'цена (ASC)',sortProperty: '-price'},
-    {name: 'алфавиту (DESC)',sortProperty: 'title'},
-    {name: 'алфавиту (ASC)',sortProperty: '-title'}
-]);
+function Sort() {
+  const sortItem = useSelector((state) => state.filterSlice.sort);
+  const dispatch = useDispatch();
 
-    return(
-        <div className="dropdown">
-          <a
-            className="btn btn-secondary dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Сортировка по: {sorted.name}
-          </a>
+  return (
+    <div className="dropdown">
+      <a
+        className="btn btn-secondary dropdown-toggle"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Сортировка по: {sortItem.name}
+      </a>
 
-          <ul className="dropdown-menu">
-              {sortType.map((sortName)=>(
-                <li onClick={() => setSorted(sortName)}>
-                <a className="dropdown-item" href="#">{sortName.name}</a>
-                </li>
-              ))}
-         
-          </ul>
-        </div>
-    )
+      <ul className="dropdown-menu">
+        {sortType.map((obj) => (
+          <li key={obj.id} onClick={() => dispatch(setSort(obj))}>
+            <a className="dropdown-item" href="#">
+              {obj.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default Sort;

@@ -1,5 +1,5 @@
 
-function ShoppingCart(params) {
+function ShoppingCart() {
     return(
         <div>
         <button
